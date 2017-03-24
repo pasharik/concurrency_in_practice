@@ -2,6 +2,7 @@ package ru.pasharik.chapter2;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -16,13 +17,33 @@ public class Listing2_4 {
         }
     };
 
-    private final AtomicLong count = new AtomicLong(0);
+    private Long countSimple = 0L;
+    private final AtomicLong countAtomic = new AtomicLong(0);
+    private final AtomicInteger activeThreadCount = new AtomicInteger(0);
+    private long timestamp = 0;
 
     private class Runner implements Runnable {
         @Override
         public void run() {
-            for (int i = 0; i < 100_000; i++) set.add(count.incrementAndGet());
+            for (int i = 0; i < 100_000; i++) {
+                doIncrementFast();   //AtomicLong
+                //doIncrementSlow(); //synchronized
+            }
+            printTime();
         }
+    }
+
+    private void doIncrementFast() {
+        set.add(countAtomic.incrementAndGet());
+    }
+
+    private synchronized void doIncrementSlow() {
+        set.add(countSimple++);
+    }
+
+    private void printTime() {
+        activeThreadCount.decrementAndGet();
+        if (activeThreadCount.get() == 0) System.out.println(System.currentTimeMillis() - timestamp);
     }
 
     public static void main(String[] args) {
@@ -30,6 +51,8 @@ public class Listing2_4 {
     }
 
     private void start() {
+        timestamp = System.currentTimeMillis();
+        activeThreadCount.set(4);
         new Thread(new Runner()).start();
         new Thread(new Runner()).start();
         new Thread(new Runner()).start();
