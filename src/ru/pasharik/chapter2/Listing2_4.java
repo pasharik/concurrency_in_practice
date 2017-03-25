@@ -1,5 +1,7 @@
 package ru.pasharik.chapter2;
 
+import net.jcip.annotations.GuardedBy;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,7 +19,7 @@ public class Listing2_4 {
         }
     };
 
-    private Long countSimple = 0L;
+    @GuardedBy("this") private Long countSimple = 0L;
     private final AtomicLong countAtomic = new AtomicLong(0);
     private final AtomicInteger activeThreadCount = new AtomicInteger(0);
     private long timestamp = 0;
