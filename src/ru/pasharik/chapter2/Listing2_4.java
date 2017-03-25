@@ -26,19 +26,11 @@ public class Listing2_4 {
         @Override
         public void run() {
             for (int i = 0; i < 100_000; i++) {
-                doIncrementFast();   //AtomicLong
-                //doIncrementSlow(); //synchronized
+                set.add(countAtomic.incrementAndGet());                         //AtomicLong
+                //synchronized (Listing2_4.this) { set.add(countSimple++); }    //synchronized
             }
             printTime();
         }
-    }
-
-    private void doIncrementFast() {
-        set.add(countAtomic.incrementAndGet());
-    }
-
-    private synchronized void doIncrementSlow() {
-        set.add(countSimple++);
     }
 
     private void printTime() {
