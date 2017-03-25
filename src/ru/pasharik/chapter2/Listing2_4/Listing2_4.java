@@ -1,4 +1,4 @@
-package ru.pasharik.chapter2;
+package ru.pasharik.chapter2.Listing2_4;
 
 import net.jcip.annotations.GuardedBy;
 
