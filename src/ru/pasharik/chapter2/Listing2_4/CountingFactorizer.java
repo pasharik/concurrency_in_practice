@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by pasharik on 21/03/17.
  */
-public class Listing2_4 {
+public class CountingFactorizer {
     private static Set<Long> set = new HashSet<Long>() {
         @Override
         public boolean add(Long aLong) {
@@ -29,7 +29,7 @@ public class Listing2_4 {
         public void run() {
             for (int i = 0; i < 100_000; i++) {
                 set.add(countAtomic.incrementAndGet());                         //AtomicLong
-                //synchronized (Listing2_4.this) { set.add(countSimple++); }    //synchronized
+                //synchronized (CountingFactorizer.this) { set.add(countSimple++); }    //synchronized
             }
             printTime();
         }
@@ -41,7 +41,7 @@ public class Listing2_4 {
     }
 
     public static void main(String[] args) {
-        new Listing2_4().start();
+        new CountingFactorizer().start();
     }
 
     private void start() {
