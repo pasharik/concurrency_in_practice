@@ -11,6 +11,9 @@ import java.util.*;
 public class ImprovedList<T> implements List<T> {
     private final List<T> list;
 
+    /*
+     Expecting list not to be changed outside of this class after construction
+     */
     public ImprovedList(List<T> list) { this.list = list; }
 
     public synchronized boolean putIfAbsent(T x) {
@@ -122,12 +125,12 @@ public class ImprovedList<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return list.listIterator();
+        return list.listIterator(); // Must be manually synched by user
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        return list.listIterator(index);
+        return list.listIterator(index); // Must be manually synched by user
     }
 
     @Override
