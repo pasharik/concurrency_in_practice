@@ -1,5 +1,6 @@
 package ru.pasharik.chapter4.Listing4_16;
 
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.*;
  */
 @ThreadSafe
 public class ImprovedList<T> implements List<T> {
+    @GuardedBy("this")
     private final List<T> list;
 
     /*
@@ -123,14 +125,20 @@ public class ImprovedList<T> implements List<T> {
         return list.lastIndexOf(o);
     }
 
+    /*
+      Must be manually synched by user
+     */
     @Override
     public ListIterator<T> listIterator() {
-        return list.listIterator(); // Must be manually synched by user
+        return list.listIterator();
     }
 
+    /*
+      Must be manually synched by user
+     */
     @Override
     public ListIterator<T> listIterator(int index) {
-        return list.listIterator(index); // Must be manually synched by user
+        return list.listIterator(index);
     }
 
     @Override
