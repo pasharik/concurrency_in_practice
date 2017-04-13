@@ -27,10 +27,26 @@ public class IterationParallel {
 
         @Override
         public void run() {
+            runOrigin();
+            //runClone();
+        }
+
+        private void runOrigin() {
             System.out.println(list.size());
             //synchronized (list) { //Uncomment to fix ConcurrentModificationException
-                for (int k : list) { doNothing(k); }
+            for (int k : list) { doNothing(k); }
             //}
+        }
+
+        /* Makes copy of the original collection and uses it for iteration.
+        Can improve performance if action on each element is time consuming */
+        private void runClone() {
+            List<Integer> listClone;
+            synchronized (list) {
+                listClone = new ArrayList<>(list);
+            }
+            System.out.println(listClone.size());
+            for (int k : listClone) doNothing(k);
         }
     }
 
