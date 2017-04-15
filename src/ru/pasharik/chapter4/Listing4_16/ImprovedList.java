@@ -145,4 +145,22 @@ public class ImprovedList<T> implements List<T> {
     public synchronized List<T> subList(int fromIndex, int toIndex) {
         return new ArrayList<T>(list.subList(fromIndex, toIndex));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        synchronized (this) {
+            return list.equals(obj);
+        }
+    }
+
+    @Override
+    public synchronized int hashCode() {
+        return list.hashCode();
+    }
+
+    @Override
+    public synchronized String toString() {
+        return list.toString();
+    }
 }
