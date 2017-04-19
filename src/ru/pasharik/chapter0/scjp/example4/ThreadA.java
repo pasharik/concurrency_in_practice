@@ -10,11 +10,8 @@ public class ThreadA {
 
         //Exactly the same can be done with b.join()
         synchronized (b) {
-            try {
-                System.out.println("Waiting for b to complete...");
-                b.wait();
-            } catch (InterruptedException e) {
-            }
+            System.out.println("Waiting for b to complete...");
+            b.wait();
             System.out.println("Total is: " + b.total);
         }
     }

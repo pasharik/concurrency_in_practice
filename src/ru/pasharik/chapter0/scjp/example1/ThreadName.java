@@ -11,7 +11,7 @@ public class ThreadName {
                 try {
                     System.out.println(i + " " + Thread.currentThread().getName());
                     Thread.sleep(1000);
-                } catch (InterruptedException e) { }
+                } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
             }
         }
     }
