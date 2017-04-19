@@ -1,6 +1,7 @@
 package ru.pasharik.chapter1;
 
 import net.jcip.annotations.NotThreadSafe;
+import ru.pasharik.chapter5.Listing5_11.TestHarness;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,15 +37,12 @@ public class Listing1_1 {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         new Listing1_1().start();
     }
 
-    private void start() {
-        new Thread(new Runner()).start();
-        new Thread(new Runner()).start();
-        new Thread(new Runner()).start();
-        new Thread(new Runner()).start();
+    private void start() throws InterruptedException {
+        new TestHarness().timeTasks(4, new Runner());
     }
 
 }
