@@ -1,10 +1,13 @@
 package ru.pasharik.chapter5.Listing5_19;
 
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.concurrent.*;
 
 /**
  * Created by pasharik on 22/04/17.
  */
+@ThreadSafe
 public class Memorizer<A, V> implements Computable<A, V> {
     private final Computable<A, V> c;
     private final ConcurrentMap<A, Future<V>> cache = new ConcurrentHashMap<>();
