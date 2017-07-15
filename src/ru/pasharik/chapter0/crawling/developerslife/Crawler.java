@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Crawler {
     private static final int NUM_THREADS = 4;
     private final ConcurrentMap<Integer, Pirojok> map = new ConcurrentHashMap<>();
-    private final ExecutorService service = Executors.newFixedThreadPool(1);
-    private final AtomicInteger pageNum = new AtomicInteger(NUM_THREADS);
+    private final ExecutorService service = Executors.newFixedThreadPool(NUM_THREADS);
+    private final AtomicInteger pageNum = new AtomicInteger(1);
     private static final int PAGE_LIMIT = 4;
     private static final int LOWER_RATING = 400;
     private static final int UPPER_RATING = 900;
