@@ -15,6 +15,7 @@ public class Crawler {
     private static final int PAGE_LIMIT = 4;
     private static final int LOWER_RATING = 400;
     private static final int UPPER_RATING = 900;
+    private static final int TIME_BUDGET = 8_000;
 
     private class CrawlerRun implements Callable<List<Pirojok>> {
         int pageNum;
@@ -34,12 +35,18 @@ public class Crawler {
         for (int pNum = 1; pNum <= PAGE_LIMIT; pNum++) {
             service.submit(new CrawlerRun(pNum));
         }
+
+        long endTime = System.currentTimeMillis() + TIME_BUDGET;
         for (int i = 1; i <= PAGE_LIMIT; i++) {
-            for (Pirojok pir : service.take().get()) {
+            long timeLeft = endTime - System.currentTimeMillis();
+            Future<List<Pirojok>> f = service.poll(timeLeft, TimeUnit.MILLISECONDS);
+            if (f == null) break;
+            for (Pirojok pir : f.get()) {
                 if (pir.getRating() > LOWER_RATING && pir.getRating() < UPPER_RATING) {
                     System.out.println(pir);
                 }
             }
+            System.out.println("--------- Page " + i + " ---------"); //Can be different page id, shows number of pages parsed so far
         }
         executor.shutdown();
     }
