@@ -27,9 +27,12 @@ public class Hex {
         return result;
     }
 
-    public static String getSHA512SecurePassword(String password) throws NoSuchAlgorithmException {
+    public static String getSHA512SecurePassword(String password) /*throws NoSuchAlgorithmException*/ {
         password = password + "$2a$06$BMgN9iI8bIUK9vIfPVtgbe";
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+        } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
         byte[] bytes = md.digest(password.getBytes());
         return new String(Hex.encode(bytes));
     }
