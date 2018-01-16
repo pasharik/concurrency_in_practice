@@ -15,14 +15,10 @@ public class PrimeProducerThread extends Thread {
 
     public void run() {
         BigInteger p = BigInteger.ONE;
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
+        try {
+            while (!Thread.currentThread().isInterrupted())
                 q.put(p = p.nextProbablePrime());
-            } catch (InterruptedException consumed) {
-                //This is important: q.put() seems to set interrupted flag back to false and throw exception
-                Thread.currentThread().interrupt();
-            }
-        }
+        } catch (InterruptedException consumed) { }
     }
 
     public void cancel() {
