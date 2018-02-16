@@ -1,4 +1,4 @@
-package ru.pasharik.Listing7_10_2;
+package ru.pasharik.chapter7.Listing7_10_2;
 
 /**
  * Created by pasharik on 15/02/18.
