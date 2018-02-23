@@ -48,7 +48,7 @@ public class Crawler {
             }
             System.out.println("--------- Page " + i + " ---------"); //Can be different page id, shows number of pages parsed so far
         }
-        executor.shutdown();
+        executor.shutdownNow();
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
