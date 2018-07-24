@@ -1,7 +1,5 @@
 package ru.pasharik.chapter13.Listing13_7;
 
-import ru.pasharik.chapter0.SleepUtil;
-
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
