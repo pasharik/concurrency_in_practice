@@ -3,6 +3,8 @@ package ru.pasharik.chapter15.Listing15_2;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+import static ru.pasharik.BarrierUtils.awaitQuietly;
+
 /**
  * Created by pasharik on 09/08/18.
  */
@@ -15,17 +17,15 @@ public class CasCounterTester {
         barrier = new CyclicBarrier(4 + 1);
         for (int i = 0; i < 4; i++) {
             new Thread(() -> {
-                try {
-                    barrier.await();
-                    for (int j = 0; j < 1_000_000; j++) {
-                        c.increment();
-                    }
-                    barrier.await();
-                } catch (BrokenBarrierException | InterruptedException e) { throw new RuntimeException(e); }
+                awaitQuietly(barrier);
+                for (int j = 0; j < 1_000_000; j++) {
+                    c.increment();
+                }
+                awaitQuietly(barrier);
             }).start();
         }
-        barrier.await(); System.out.println("Calculating...");
-        barrier.await(); System.out.println(c.getValue());
+        awaitQuietly(barrier); System.out.println("Calculating...");
+        awaitQuietly(barrier); System.out.println(c.getValue());
     }
 
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
