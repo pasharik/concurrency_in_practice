@@ -21,7 +21,7 @@ public class Renderer {
                     } catch (InterruptedException ignored) {
                         Thread.currentThread().interrupt();
                     }
-                    return "Thread #: " + Thread.currentThread().getId() + " | Waided for: " + waitInterval;
+                    return "Thread #: " + Thread.currentThread().getId() + " | Waited for: " + waitInterval;
                 }
             });
         }
